@@ -40,7 +40,13 @@ public abstract class ActorBase : KinematicBody2D
     protected Vector2 snappedVector;
     public bool isSnapped { get; set; }
 
+    [Export]
+    public int MaxGroundCombo { get; private set; }
+    [Export]
+    public int MaxDashCombo { get; private set; }
 
+    public int CurrentComboID { get; set; }
+    public int CurrentDashComboID { get; set; }
     protected void Init()
     {
 

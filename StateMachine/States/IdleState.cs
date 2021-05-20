@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using TestCs.StateMachine.States.AttackStates;
 
 namespace TestCs.StateMachine.States
 {
@@ -19,7 +20,7 @@ namespace TestCs.StateMachine.States
             }
             if (Input.IsActionJustPressed("g_attack") && actor.CurrentStamina > 0)
             {
-                finiteStateMachine.ChangeState<AttackState>();
+                finiteStateMachine.ChangeState<GroundAttack>();
             }
             if (!actor.IsOnFloor())
             {
@@ -29,6 +30,7 @@ namespace TestCs.StateMachine.States
 
         public override void EnterState()
         {
+            actor.ActorAnimation.Play("mc-RESET");
             actor.ActorSprite.Play("idle");
             actor.Velocity.y = 0;
         }

@@ -26,7 +26,8 @@ namespace TestCs.StateMachine
 
             CurrentState = this.FindChildrenOfType<T>().First();
             CurrentState.EnterState();
-            GD.Print(PreviousState.Name);
+            GD.Print($"previous state = {PreviousState.Name}");
+            //GD.Print($"current state = {CurrentState.Name}");
         }
 
         public void ChangeToPreviousState()

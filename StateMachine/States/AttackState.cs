@@ -18,7 +18,7 @@ namespace TestCs.StateMachine.States
         public override void EnterState()
         {
             comboCurrentId = 0;
-            comboCurrentId = 0;
+            comboNextId = 0;
             actor.ActorAnimation.Play(FormatAnimationName("mc-attack"));
             actor.UpdateSP(10);
         }
