@@ -28,8 +28,6 @@ namespace TestCs.StateMachine.States
         {
             actor.ActorSprite.Play("jump");
             actor.Velocity.y = actor.JumpForce;
-            GD.Print(GetParent<StateMachineBase>().PreviousState);
-            GD.Print(actor.FacingDirection);
             actor.isSnapped = false;
         }
 

@@ -35,5 +35,10 @@ namespace TestCs.StateMachine.States.AttackStates
             GD.Print($"{formatedAnimationName}");
             return formatedAnimationName;
         }
+
+        public override bool CanHook()
+        {
+            return false;
+        }
     }
 }

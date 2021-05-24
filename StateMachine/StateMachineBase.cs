@@ -18,6 +18,10 @@ namespace TestCs.StateMachine
         public override void _Process(float delta)
         {
             CurrentState.Do();
+            if(CurrentState.CanHook() && Input.IsActionJustPressed("g_hook"))
+            {
+                ChangeState<PrepareHook>();
+            }
         }
 
         public void ChangeState<T>() where T : StateBase

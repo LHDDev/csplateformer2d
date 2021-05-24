@@ -14,6 +14,11 @@ namespace TestCs.StateMachine.States
             return true;
         }
 
+        public virtual Boolean CanHook()
+        {
+            return true;
+        }
+
         public abstract void EnterState();
 
         public override void _Ready() 

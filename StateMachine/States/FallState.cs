@@ -1,5 +1,3 @@
-using Godot;
-using System;
 
 namespace TestCs.StateMachine.States
 {
@@ -23,6 +21,7 @@ namespace TestCs.StateMachine.States
             {
                 finiteStateMachine.ChangeState<IdleState>();
             }
+
         }
 
         public override void EnterState()

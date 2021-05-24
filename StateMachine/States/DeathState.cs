@@ -23,6 +23,10 @@ namespace TestCs.StateMachine.States
         {
             return false;
         }
+        public override bool CanHook()
+        {
+            return false;
+        }
 
         public override void EnterState()
         {

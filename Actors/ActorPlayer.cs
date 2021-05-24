@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using TestCs.StateMachine.States;
 
 public class ActorPlayer : ActorBase
@@ -10,6 +11,10 @@ public class ActorPlayer : ActorBase
     [Signal]
     delegate void UpdatedPlayerSp(float newCurrentSP);
 
+    [Export]
+    private NodePath HookDetectionAreaPath;
+    public HookableDetection HookDetectionArea { get; private set; }
+
 
     // Called when the node enters the scene tree for the first time.
     public async override void _Ready()
@@ -17,9 +22,13 @@ public class ActorPlayer : ActorBase
         base.Init();
         FacingDirection = 0;
 
+        HookDetectionArea = this.FindChildrenOfType<HookableDetection>().ElementAt(0);
+
         await ToSignal(GetParent<GameManager>(), "ready");
         EmitSignal(nameof(UpdatedPlayerHp), CurrentHealt * 100 / maxHealth);
         EmitSignal(nameof(UpdatedPlayerSp), CurrentStamina * 100 / maxStamina);
+
+
     }
 
     public override void _Process(float delta)
