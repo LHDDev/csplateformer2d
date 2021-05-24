@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using TestCs.StateMachine.States.AttackStates;
 
 namespace TestCs.StateMachine.States
 {
@@ -24,6 +25,11 @@ namespace TestCs.StateMachine.States
             {
                 // Active Coyotte Time
                 finiteStateMachine.ChangeState<FallState>();
+            }
+
+            if(Input.GetActionStrength("ui_left") - Input.GetActionStrength("ui_right") != 0 && Input.IsActionJustPressed("g_attack") && actor.CurrentStamina > 0)
+            {
+                finiteStateMachine.ChangeState<DashAttack>();
             }
         }
 

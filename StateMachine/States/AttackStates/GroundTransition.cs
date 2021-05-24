@@ -12,17 +12,15 @@ namespace TestCs.StateMachine.States.AttackStates
         {
             
             
-            if(framesBeforeIdle == 0 || actor.CurrentStamina <= 0 )
+            if(!actor.ActorAnimation.IsPlaying() || actor.CurrentStamina <= 0 )
             {
                 finiteStateMachine.ChangeState<IdleState>();
             }
-
-            framesBeforeIdle--;
         }
 
         public override void EnterState()
         {
-            framesBeforeIdle = 10;
+            actor.ActorAnimation.Play("mc-ground-transition");
         }
 
         public override void _UnhandledInput(InputEvent @event)

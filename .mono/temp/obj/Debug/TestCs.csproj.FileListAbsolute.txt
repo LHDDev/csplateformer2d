@@ -1,9 +1,0 @@
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\bin\Debug\TestCs.dll
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\bin\Debug\TestCs.pdb
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\obj\Debug\TestCs.csprojAssemblyReference.cache
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\obj\Debug\TestCs.AssemblyInfoInputs.cache
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\obj\Debug\TestCs.AssemblyInfo.cs
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\obj\Debug\TestCs.csproj.CoreCompileInputs.cache
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\obj\Debug\TestCs.dll
-D:\GODOT_PROJECT\MONO_PROJECTS\TestCs\.mono\temp\obj\Debug\TestCs.pdb
-D:\godot_project\mono_projects\TestCs\.mono\temp\bin\Debug\TestCs.deps.json

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Assets/Graphics/spritesheets/World/Mockup-parallax.png" type="Texture" id=1]
 [ext_resource path="res://TestActorBase.tscn" type="PackedScene" id=2]
@@ -129,6 +129,18 @@ points = PoolVector2Array( 0, 0, 32, 0, 0, 32, 0, 32 )
 } ]
 4/z_index = 0
 
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.556863, 0.027451, 0.027451, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.211765, 0.188235, 0.188235, 0 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.345098, 0.172549, 0.0666667, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 5 )
 
@@ -206,51 +218,76 @@ stunTimer = 0.2
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GUI" type="MarginContainer" parent="CanvasLayer"]
-margin_right = 25.0
-margin_bottom = 14.0
+margin_right = 134.0
+margin_bottom = 32.0
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+HPBarNodePath = NodePath("VBoxContainer/HBoxContainer/VBoxContainer2/CurrentHPLabel")
+SPBarNodePath = NodePath("VBoxContainer/HBoxContainer/VBoxContainer2/CurrentSPLabel")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI"]
-margin_right = 54.0
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GUI"]
+margin_right = 134.0
+margin_bottom = 32.0
+color = Color( 0.196078, 0.196078, 0.196078, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI"]
+margin_right = 134.0
 margin_bottom = 32.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI/HBoxContainer"]
-margin_right = 54.0
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI/VBoxContainer"]
+margin_right = 134.0
 margin_bottom = 32.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI/HBoxContainer/VBoxContainer"]
-margin_right = 54.0
-margin_bottom = 14.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI/VBoxContainer/HBoxContainer"]
+margin_right = 26.0
+margin_bottom = 32.0
 
-[node name="HPLabel" type="Label" parent="CanvasLayer/GUI/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="HPLabel" type="Label" parent="CanvasLayer/GUI/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_right = 26.0
 margin_bottom = 14.0
 text = "HP :"
 
-[node name="CurrentHPLabel" type="Label" parent="CanvasLayer/GUI/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 30.0
-margin_right = 54.0
-margin_bottom = 14.0
-text = "000"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/GUI/HBoxContainer/VBoxContainer"]
+[node name="SPLabel" type="Label" parent="CanvasLayer/GUI/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 18.0
-margin_right = 54.0
+margin_right = 26.0
 margin_bottom = 32.0
-
-[node name="SPLabel" type="Label" parent="CanvasLayer/GUI/HBoxContainer/VBoxContainer/HBoxContainer2"]
-margin_right = 23.0
-margin_bottom = 14.0
 text = "SP :"
 
-[node name="CurrentSPLabel" type="Label" parent="CanvasLayer/GUI/HBoxContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 27.0
-margin_right = 51.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/GUI/VBoxContainer/HBoxContainer"]
+margin_left = 30.0
+margin_right = 134.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CurrentHPLabel" type="ProgressBar" parent="CanvasLayer/GUI/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_right = 104.0
 margin_bottom = 14.0
-text = "000"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+step = 1.0
+value = 60.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentSPLabel" type="ProgressBar" parent="CanvasLayer/GUI/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 18.0
+margin_right = 104.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+step = 1.0
+value = 50.0
+rounded = true
+percent_visible = false
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource( 6 )

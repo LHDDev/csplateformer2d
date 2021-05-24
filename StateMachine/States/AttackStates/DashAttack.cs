@@ -12,7 +12,7 @@ namespace TestCs.StateMachine.States.AttackStates
         {
             actor.CurrentComboID = 0;
             actor.CurrentDashComboID = 0;
-            actor.ActorAnimation.Play(FormatAnimationName("mc-attack"));
+            actor.ActorAnimation.Play(FormatAnimationName("mc-dash-attack"));
             actor.UpdateSP(10);
         }
         public override void Do()
@@ -20,7 +20,7 @@ namespace TestCs.StateMachine.States.AttackStates
             actor.Velocity.x = 12000 * actor.FacingDirection;
             if (!actor.ActorAnimation.IsPlaying())
             {
-                actor.CurrentComboID ++;
+                actor.CurrentDashComboID ++;
                 finiteStateMachine.ChangeState<GroundTransition>();
             }
         }

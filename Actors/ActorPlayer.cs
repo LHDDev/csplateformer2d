@@ -18,8 +18,8 @@ public class ActorPlayer : ActorBase
         FacingDirection = 0;
 
         await ToSignal(GetParent<GameManager>(), "ready");
-        EmitSignal(nameof(UpdatedPlayerHp), CurrentHealt);
-        EmitSignal(nameof(UpdatedPlayerSp), CurrentStamina);
+        EmitSignal(nameof(UpdatedPlayerHp), CurrentHealt * 100 / maxHealth);
+        EmitSignal(nameof(UpdatedPlayerSp), CurrentStamina * 100 / maxStamina);
     }
 
     public override void _Process(float delta)
@@ -51,12 +51,12 @@ public class ActorPlayer : ActorBase
     public override void UpdateHP(int amount)
     {
         base.UpdateHP(amount);
-        EmitSignal(nameof(UpdatedPlayerHp), CurrentHealt);
+        EmitSignal(nameof(UpdatedPlayerHp), CurrentHealt*100/maxHealth);
     }
 
     public override void UpdateSP(int amount)
     {
         base.UpdateSP(amount);
-        EmitSignal(nameof(UpdatedPlayerSp), CurrentStamina);
+        EmitSignal(nameof(UpdatedPlayerSp), CurrentStamina*100/maxStamina);
     }
 }

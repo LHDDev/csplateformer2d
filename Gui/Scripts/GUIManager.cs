@@ -4,22 +4,31 @@ using static Extension;
 
 public class GUIManager : MarginContainer
 {
-    private Label currentHpLabel;
-    private Label currentSpLabel;
+    [Export]
+    private NodePath HPBarNodePath;
+    [Export]
+    private NodePath SPBarNodePath;
+
+
+    private ProgressBar HPBar;
+    private ProgressBar SpBar;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        currentHpLabel = this.GetNode<Label>("HBoxContainer/VBoxContainer/HBoxContainer/CurrentHPLabel");
-        currentSpLabel = this.GetNode<Label>("HBoxContainer/VBoxContainer/HBoxContainer2/CurrentSPLabel");
+        HPBar = this.GetNode<ProgressBar>(HPBarNodePath);
+        SpBar = this.GetNode<ProgressBar>(SPBarNodePath);
     }
 
     public void UpdateHp(float newCurrentHP)
     {
-        currentHpLabel.Text = newCurrentHP.ToString();
+        HPBar.Value = newCurrentHP;
     }
     public void UpdateSp(float newCurrentSP)
     {
-        currentSpLabel.Text = newCurrentSP.ToString();
+        SpBar.Value = newCurrentSP;
     }
+
+
+
 }

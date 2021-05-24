@@ -13,9 +13,9 @@ public abstract class ActorBase : KinematicBody2D
     [Export]
     private Vector2 recoilForce;
     [Export]
-    private int maxHealth = -1; // Neg health on start -> infinite health
+    protected int maxHealth = -1; // Neg health on start -> infinite health
     [Export]
-    private int maxStamina = -1; // Neg stamina on start -> infinite stamina
+    protected int maxStamina = -1; // Neg stamina on start -> infinite stamina
     [Export(PropertyHint.Range, "0.0,1.0")]
     private float flashModifier;
     [Export]

@@ -11,6 +11,7 @@ namespace TestCs.StateMachine.States.AttackStates
         public override void EnterState()
         {
 
+            actor.CurrentDashComboID = 0;
             if (!(finiteStateMachine.PreviousState is GroundTransition))
             {
                 actor.CurrentComboID = 0;
