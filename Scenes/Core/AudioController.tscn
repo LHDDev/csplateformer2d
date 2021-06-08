@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Core/Audio/AudioController.cs" type="Script" id=1]
+
+[node name="AudioController" type="Node"]
+script = ExtResource( 1 )
+musicPlayerNode = NodePath("MusicPlayer")
+sfxPlayersNode = NodePath("SFX")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+bus = "MainAudio"
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="SFXPlayer1" type="AudioStreamPlayer" parent="SFX"]
+bus = "SoundEffect"
+
+[node name="SFXPlayer2" type="AudioStreamPlayer" parent="SFX"]
+bus = "SoundEffect"
+
+[node name="SFXPlayer3" type="AudioStreamPlayer" parent="SFX"]
+bus = "SoundEffect"
+
+[node name="SFXPlayer4" type="AudioStreamPlayer" parent="SFX"]
+bus = "SoundEffect"
+
+[node name="SFXPlayer5" type="AudioStreamPlayer" parent="SFX"]
+bus = "SoundEffect"
+
+[node name="SFXPlayer6" type="AudioStreamPlayer" parent="SFX"]
+bus = "SoundEffect"
+
+[node name="SFXPlayer7" type="AudioStreamPlayer" parent="SFX"]
+bus = "SoundEffect"

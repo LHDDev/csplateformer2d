@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/hit_woosh.wav-77760030d082459d8ea5ec81a0a5d270.sample"
+
+[deps]
+
+source_file="res://Assets/Musics/SfxLibrary/hit_woosh.wav"
+dest_files=[ "res://.import/hit_woosh.wav-77760030d082459d8ea5ec81a0a5d270.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

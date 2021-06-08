@@ -1,17 +1,18 @@
 using Godot;
 using System;
 using System.Linq;
+using TestCs.Core.Hook;
 
-public class HookSocle : Position2D, IComparable<HookSocle>
+public class Hookable : HookableBase
 {
     private Area2D hookReception;
-    public float distFromPlayer;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         hookReception = this.FindChildrenOfType<Area2D>().ElementAt(0);
         hookReception.Connect("area_entered", this, nameof(onAreaEntered));
+        hookReception.AddToGroup("hookable_group");
     }
 
 
@@ -19,21 +20,9 @@ public class HookSocle : Position2D, IComparable<HookSocle>
     {
         if(area is HookableDetection hookableDetection)
         {
-            GD.Print("Here !");
-            distFromPlayer = this.Position.DistanceTo(area.Position);
+            DistFromPlayer = this.GlobalPosition.DistanceTo(area.GlobalPosition);
             hookableDetection.TryAddingHookable(this);
         }
     }
 
-    public int CompareTo(HookSocle other)
-    {
-        int indexOrder = distFromPlayer.CompareTo(other.distFromPlayer);
-
-        if ( indexOrder != 0)
-        {
-            return indexOrder;
-        }
-
-        return 0;
-    }
 }

@@ -1,20 +1,20 @@
-﻿using System;
+﻿
 using Godot;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TestCs.StateMachine.States.HookStates
 {
     class HookState : StateBase
     {
+        [Export]
+        private Vector2 hookPullingMovement;
         private Vector2 positionTo;
+        
         public override void Do()
         {
             actor.Velocity = (positionTo - actor.Position).Normalized();
-            actor.Velocity.x *= actor.movementSpeed;
-            actor.Velocity.y *= -actor.JumpForce ;
+            actor.Velocity *= hookPullingMovement;
             if(actor.Position.y <= positionTo.y)
             {
+
                 actor.isSnapped = true;
                 finiteStateMachine.ChangeState<FallState>();
             }
@@ -25,6 +25,11 @@ namespace TestCs.StateMachine.States.HookStates
             actor.ActorSprite.Play("jump");
             positionTo = (actor as ActorPlayer).HookDetectionArea.getSelectedHookableGlobalPosition();
             actor.isSnapped = false;
+        }
+
+        public override bool CanUpdateDirection()
+        {
+            return false;
         }
     }
 }

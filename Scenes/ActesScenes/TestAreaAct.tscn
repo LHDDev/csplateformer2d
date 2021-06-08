@@ -142,7 +142,7 @@ bg_color = Color( 0.345098, 0.172549, 0.0666667, 1 )
 [sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[node name="Node2D" type="Node2D"]
+[node name="TestAreaAct" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -295,3 +295,6 @@ script = ExtResource( 6 )
 
 [node name="HookSocle" parent="." instance=ExtResource( 7 )]
 position = Vector2( 404.858, 164.414 )
+
+[node name="HookSocle2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 328.154, 185.82 )

@@ -1,6 +1,7 @@
 ﻿
 
 using Godot;
+using TestCs.Core.Audio;
 
 namespace TestCs.StateMachine.States.AttackStates
 {
@@ -14,6 +15,7 @@ namespace TestCs.StateMachine.States.AttackStates
             actor.CurrentDashComboID = 0;
             actor.ActorAnimation.Play(FormatAnimationName("mc-dash-attack"));
             actor.UpdateSP(10);
+            actor.AudioController.PlaySFX(AudioTypes.SFX_SWORD_SWOOSH_PATH);
         }
         public override void Do()
         {

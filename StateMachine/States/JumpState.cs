@@ -31,5 +31,10 @@ namespace TestCs.StateMachine.States
             actor.isSnapped = false;
         }
 
+        public override bool CanUpdateDirection()
+        {
+            return false;
+        }
+
     }
 }

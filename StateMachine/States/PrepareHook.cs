@@ -3,27 +3,59 @@ using System;
 using System.Linq;
 using TestCs.StateMachine.States.HookStates;
 
+using static Extension;
+
 namespace TestCs.StateMachine.States
 {
     class PrepareHook : StateBase
     {
+        [Export]
+        private String hookScenePath;
+        [Export]
+        private NodePath spawnHookPositionPath;
 
-        public override void Do()
+        private Position2D spawnHookPosition;
+
+        private HookableDetection hookableDetection;
+
+        private bool hookThrowed;
+        public override async void Do()
         {
-            if (!Input.IsActionPressed("g_hook"))
+            if(!hookThrowed)
             {
-                (actor as ActorPlayer).HookDetectionArea.EnableDetection(false);
-                finiteStateMachine.ChangeState<IdleState>();
+                if (!Input.IsActionPressed("g_hook"))
+                {
+                    hookableDetection.EnableDetection(false);
+                    finiteStateMachine.ChangeState<IdleState>();
+                }
+
+                if (Input.IsActionJustPressed("g_jump") && hookableDetection.accessibleHookSocles.Any())
+                {
+                    // throw Hook to position
+                    // Wait for hook signal stating it arrived
+                    // change stat to HookState
+                    hookThrowed = true;
+                    hookableDetection.EnableDetection(false);
+
+                    Hook hook = SmartLoader<Hook>(hookScenePath);
+                    actor.GetParent().AddChild(hook);
+                    hook.Position = actor.GlobalPosition;
+                    hook.DirectionTo = hookableDetection.getSelectedHookableGlobalPosition();
+                    hook.LookAt(hook.DirectionTo);
+
+                    await ToSignal(hook, nameof(Hook.HookableCollided));
+
+                    if((actor.GlobalPosition.x > hook.DirectionTo.x && !actor.ActorSprite.FlipH) || (actor.GlobalPosition.x < hook.DirectionTo.x && actor.ActorSprite.FlipH))
+                    {
+                        actor.ActorSprite.FlipH = !actor.ActorSprite.FlipH;
+                    }
+
+                    finiteStateMachine.ChangeState<HookState>();
+                
+                }
             }
 
-            if (Input.IsActionJustPressed("g_jump") && (actor as ActorPlayer).HookDetectionArea.accessibleHookSocles.Any())
-            {
-                // throw Hook to position
-                // Wait for hook signal stating it arrived
-                // change stat to HookState
-                (actor as ActorPlayer).HookDetectionArea.EnableDetection(false);
-                finiteStateMachine.ChangeState<HookState>();
-            }
+            //spawnHookPosition.GetParent<Position2D>().LookAt(hookableDetection.getSelectedHookableGlobalPosition());
         }
 
         public override bool CanHook()
@@ -34,10 +66,14 @@ namespace TestCs.StateMachine.States
         public override void EnterState()
         {
             // Ralentir temporalité
-            if(actor is ActorPlayer)
+
+            if(actor is ActorPlayer player)
             {
-                (actor as ActorPlayer).HookDetectionArea.EnableDetection(true);
-                (actor as ActorPlayer).HookDetectionArea.accessibleHookSocles.Clear();
+                hookableDetection = player.HookDetectionArea;
+                hookableDetection.EnableDetection(true);
+                hookableDetection.accessibleHookSocles.Clear();
+                hookThrowed = false;
+
             }
             else
             {

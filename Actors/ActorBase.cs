@@ -3,6 +3,7 @@ using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TestCs.Core.Audio;
 using TestCs.StateMachine;
 using TestCs.StateMachine.States;
 
@@ -32,8 +33,10 @@ public abstract class ActorBase : KinematicBody2D
     public int CurrentHealt { get; protected set; }
     public int CurrentStamina { get; protected set; }
     public AnimatedSprite ActorSprite { get; private set; }
-    public AnimationPlayer ActorAnimation { get; private set; 
-    }
+    public AnimationPlayer ActorAnimation { get; private set; }
+
+    public AudioController AudioController { get; private set; }
+
     protected StateMachineBase finiteStateMachine;
     public int FacingDirection { get; protected set; }
 
@@ -68,6 +71,8 @@ public abstract class ActorBase : KinematicBody2D
         {
             finiteStateMachine.ChangeState<IdleState>();
         }
+
+        AudioController = GetNode<AudioController>("/root/AudioController");
 
     }
 
@@ -112,6 +117,7 @@ public abstract class ActorBase : KinematicBody2D
 
         Array<AnimatedSprite> animatedSpriteChildrenList = this.FindChildrenOfType<AnimatedSprite>();
         Array<AnimationPlayer> animationPlayerChildrenList = this.FindChildrenOfType<AnimationPlayer>();
+        Array<SoundManager> audioStreamChildrenList = this.FindChildrenOfType<SoundManager>();
 
         if (!animatedSpriteChildrenList.Any())
         {

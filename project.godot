@@ -11,8 +11,12 @@ config_version=4
 [application]
 
 config/name="TestCs"
-run/main_scene="res://Scenes/MonoTestScene.tscn"
+run/main_scene="res://Scenes/PlayScene.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+AudioController="*res://Scenes/Core/AudioController.tscn"
 
 [display]
 
