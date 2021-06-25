@@ -19,6 +19,10 @@ namespace TestCs.StateMachine.States
             return true;
         }
 
+        public virtual bool CanMove()
+        {
+            return true;
+        }
         public abstract void EnterState();
 
         public override void _Ready() 

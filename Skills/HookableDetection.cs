@@ -15,18 +15,23 @@ public class HookableDetection : Area2D
         collisionShape2D = this.FindChildrenOfType<CollisionShape2D>().ElementAt(0);
 
         accessibleHookSocles = new List<HookableBase>();
-        selectedHookableIndex = 0;
     }
 
     /// <summary>
     /// Enable detection for Hookable spots
     /// </summary>
     /// <param name="isEnabled"> state if detection is enabled</param>
-    public void EnableDetection(bool isEnabled)
+    public void EnableDetection()
     {
-        collisionShape2D.Disabled = !isEnabled;
+        selectedHookableIndex = 0;
+        collisionShape2D.Disabled = false;
     }
 
+    public void DisableDetection()
+    {
+        accessibleHookSocles.ElementAt<HookableBase>(selectedHookableIndex).SetSelected(false);
+        collisionShape2D.Disabled = true;
+    }
     public void TryAddingHookable(HookableBase hookable)
     {
         // Is hookable accessible ?
@@ -36,11 +41,44 @@ public class HookableDetection : Area2D
         accessibleHookSocles.Add(hookable);
         accessibleHookSocles.Sort();
 
+        RefreshShaders();
 
     }
 
-    public Vector2 getSelectedHookableGlobalPosition()
+    public Vector2 GetSelectedHookableGlobalPosition()
     {
+        GD.Print($"selected Index = {selectedHookableIndex}");
+        accessibleHookSocles.ElementAt<HookableBase>(selectedHookableIndex).SetSelected(false);
         return accessibleHookSocles.ElementAt<HookableBase>(selectedHookableIndex).GlobalPosition;
+    }
+
+    public void SelectNextHookable()
+    {
+        if (selectedHookableIndex >= accessibleHookSocles.Count - 1)
+        {
+            selectedHookableIndex = 0;
+        }
+        else
+            selectedHookableIndex ++;
+        RefreshShaders();
+    }
+
+    public void SelectPreviousHookable()
+    {
+        if (selectedHookableIndex <= 0)
+        {
+            selectedHookableIndex = accessibleHookSocles.Count - 1;
+        }
+        else
+            selectedHookableIndex --;
+
+        RefreshShaders();
+    }
+
+    private void RefreshShaders()
+    {
+        accessibleHookSocles.ForEach(h => h.SetSelected(false));
+        accessibleHookSocles.ElementAt<HookableBase>(selectedHookableIndex).SetSelected(true);
+
     }
 }

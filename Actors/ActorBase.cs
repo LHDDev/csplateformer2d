@@ -89,7 +89,10 @@ public abstract class ActorBase : KinematicBody2D
     //  }
     public override void _PhysicsProcess(float delta)
     {
-        ApplyMovement(delta);
+        if (finiteStateMachine.CurrentState.CanMove())
+        {
+            ApplyMovement(delta);
+        }
     }
 
     private void ApplyMovement(float delta)

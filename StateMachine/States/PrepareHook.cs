@@ -25,7 +25,7 @@ namespace TestCs.StateMachine.States
             {
                 if (!Input.IsActionPressed("g_hook"))
                 {
-                    hookableDetection.EnableDetection(false);
+                    hookableDetection.DisableDetection();
                     finiteStateMachine.ChangeState<IdleState>();
                 }
 
@@ -35,13 +35,13 @@ namespace TestCs.StateMachine.States
                     // Wait for hook signal stating it arrived
                     // change stat to HookState
                     hookThrowed = true;
-                    hookableDetection.EnableDetection(false);
 
                     Hook hook = SmartLoader<Hook>(hookScenePath);
                     actor.GetParent().AddChild(hook);
                     hook.Position = actor.GlobalPosition;
-                    hook.DirectionTo = hookableDetection.getSelectedHookableGlobalPosition();
+                    hook.DirectionTo = hookableDetection.GetSelectedHookableGlobalPosition();
                     hook.LookAt(hook.DirectionTo);
+                    hookableDetection.DisableDetection();
 
                     await ToSignal(hook, nameof(Hook.HookableCollided));
 
@@ -53,12 +53,31 @@ namespace TestCs.StateMachine.States
                     finiteStateMachine.ChangeState<HookState>();
                 
                 }
+                if (Input.IsActionJustPressed("ui_left"))
+                {
+                    hookableDetection.SelectPreviousHookable();
+                }
+
+                if (Input.IsActionJustPressed("ui_right"))
+                {
+                    hookableDetection.SelectNextHookable();
+                }
             }
 
             //spawnHookPosition.GetParent<Position2D>().LookAt(hookableDetection.getSelectedHookableGlobalPosition());
         }
 
         public override bool CanHook()
+        {
+            return false;
+        }
+
+        public override bool CanUpdateDirection()
+        {
+            return false;
+        }
+
+        public override bool CanMove()
         {
             return false;
         }
@@ -70,7 +89,7 @@ namespace TestCs.StateMachine.States
             if(actor is ActorPlayer player)
             {
                 hookableDetection = player.HookDetectionArea;
-                hookableDetection.EnableDetection(true);
+                hookableDetection.EnableDetection();
                 hookableDetection.accessibleHookSocles.Clear();
                 hookThrowed = false;
 

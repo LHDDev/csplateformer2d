@@ -23,7 +23,7 @@ namespace TestCs.StateMachine.States.HookStates
         public override void EnterState()
         {
             actor.ActorSprite.Play("jump");
-            positionTo = (actor as ActorPlayer).HookDetectionArea.getSelectedHookableGlobalPosition();
+            positionTo = (actor as ActorPlayer).HookDetectionArea.GetSelectedHookableGlobalPosition();
             actor.isSnapped = false;
         }
 

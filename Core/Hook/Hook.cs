@@ -21,7 +21,7 @@ public class Hook : KinematicBody2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(float delta)
     {
-        if (this.GlobalPosition.DistanceTo(directionTo) >= 1.20)
+        if (this.GlobalPosition.DistanceTo(directionTo) >= 2.0f)
         {
             this.velocity = (directionTo - this.GlobalPosition).Normalized();
             this.velocity.x *= this.movementSpeed.x;

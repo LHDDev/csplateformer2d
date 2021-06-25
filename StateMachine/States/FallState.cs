@@ -13,7 +13,6 @@ namespace TestCs.StateMachine.States
             {
                 if (!actor.IsOnWall())
                 {
-                    GD.Print($"FacingDirection = {actor.FacingDirection}");
                     actor.Velocity.x = (actor.FacingDirection == 0 ) ? actor.movementSpeed * initialFacingDirection:actor.movementSpeed*actor.FacingDirection;
                     
                 }
