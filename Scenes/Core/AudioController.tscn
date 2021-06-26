@@ -3,12 +3,13 @@
 [ext_resource path="res://Core/Audio/AudioController.cs" type="Script" id=1]
 
 [node name="AudioController" type="Node"]
+pause_mode = 2
 script = ExtResource( 1 )
 musicPlayerNode = NodePath("MusicPlayer")
 sfxPlayersNode = NodePath("SFX")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-bus = "MainAudio"
+bus = "Music"
 
 [node name="SFX" type="Node" parent="."]
 

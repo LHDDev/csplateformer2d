@@ -1,11 +1,113 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/ActesScenes/TestAreaAct.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Core/SoundMenu.cs" type="Script" id=2]
 
 [node name="PlayScene" type="Node"]
 
 [node name="CurrentActScene" type="Node" parent="."]
 
 [node name="Node2D" parent="CurrentActScene" instance=ExtResource( 1 )]
+pause_mode = 1
+position = Vector2( -1.5874, -1.19055 )
 
 [node name="OrchestraPit" type="Node" parent="."]
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Menu" type="Panel" parent="UI"]
+pause_mode = 2
+margin_left = 240.0
+margin_top = 50.0
+margin_right = 400.0
+margin_bottom = 250.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionsMenu" type="MarginContainer" parent="UI/Menu"]
+margin_right = 160.0
+margin_bottom = 200.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Menu/OptionsMenu"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 150.0
+margin_bottom = 190.0
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/Menu/OptionsMenu/VBoxContainer"]
+margin_right = 140.0
+margin_bottom = 14.0
+
+[node name="MenuTitle" type="Label" parent="UI/Menu/OptionsMenu/VBoxContainer/CenterContainer"]
+margin_left = 45.0
+margin_right = 94.0
+margin_bottom = 14.0
+text = "Volume"
+
+[node name="SoundMenu" type="HBoxContainer" parent="UI/Menu/OptionsMenu/VBoxContainer"]
+margin_top = 18.0
+margin_right = 140.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+musicVolumeSliderPath = NodePath("SlidersVolume/MusicVolume")
+sfxVolumeSliderPath = NodePath("SlidersVolume/SoundEffectVolume")
+
+[node name="Labels" type="VBoxContainer" parent="UI/Menu/OptionsMenu/VBoxContainer/SoundMenu"]
+margin_right = 78.0
+margin_bottom = 162.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 8
+
+[node name="MusicLabel" type="Label" parent="UI/Menu/OptionsMenu/VBoxContainer/SoundMenu/Labels"]
+margin_right = 78.0
+margin_bottom = 14.0
+text = "Music"
+
+[node name="SoundEffectLabel" type="Label" parent="UI/Menu/OptionsMenu/VBoxContainer/SoundMenu/Labels"]
+margin_top = 22.0
+margin_right = 78.0
+margin_bottom = 36.0
+text = "Sound Effect"
+
+[node name="SlidersVolume" type="VBoxContainer" parent="UI/Menu/OptionsMenu/VBoxContainer/SoundMenu"]
+margin_left = 82.0
+margin_right = 140.0
+margin_bottom = 162.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+
+[node name="MusicVolume" type="HSlider" parent="UI/Menu/OptionsMenu/VBoxContainer/SoundMenu/SlidersVolume"]
+margin_right = 58.0
+margin_bottom = 16.0
+value = 100.0
+rounded = true
+
+[node name="SoundEffectVolume" type="HSlider" parent="UI/Menu/OptionsMenu/VBoxContainer/SoundMenu/SlidersVolume"]
+margin_top = 21.0
+margin_right = 58.0
+margin_bottom = 37.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="BindingsMenu" type="Control" parent="UI/Menu/OptionsMenu"]
+visible = false
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 150.0
+margin_bottom = 190.0
