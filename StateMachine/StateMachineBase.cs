@@ -1,9 +1,8 @@
 using Godot;
-
+using Heimgaerd.StateMachine.States;
 using System.Linq;
-using TestCs.StateMachine.States;
 
-namespace TestCs.StateMachine
+namespace Heimgaerd.StateMachine
 {
     public class StateMachineBase : Node
     {
@@ -18,7 +17,7 @@ namespace TestCs.StateMachine
         public override void _Process(float delta)
         {
             CurrentState.Do();
-            if(CurrentState.CanHook() && Input.IsActionJustPressed("g_hook"))
+            if (CurrentState.CanHook() && Input.IsActionJustPressed("g_hook"))
             {
                 ChangeState<PrepareHook>();
             }
@@ -43,7 +42,7 @@ namespace TestCs.StateMachine
             else
             {
                 var changeStateMethod = typeof(StateMachineBase).GetMethod(nameof(ChangeState));
-                var methodRef = changeStateMethod.MakeGenericMethod(this.PreviousState.GetType());
+                var methodRef = changeStateMethod.MakeGenericMethod(PreviousState.GetType());
                 methodRef.Invoke(this, null);
             }
         }

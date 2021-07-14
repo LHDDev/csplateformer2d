@@ -1,5 +1,6 @@
 using Godot;
-namespace TestCs.Core.Audio
+
+namespace Heimgaerd.Core.Audio
 {
 
     public class AudioController : Node
@@ -32,7 +33,7 @@ namespace TestCs.Core.Audio
 
         public void PlaySFX(AudioStream sfxStream)
         {
-            foreach ( AudioStreamPlayer sfxPlayer in sfxPlayers.FindChildrenOfType<AudioStreamPlayer>())
+            foreach (AudioStreamPlayer sfxPlayer in sfxPlayers.FindChildrenOfType<AudioStreamPlayer>())
             {
                 if (!sfxPlayer.Playing)
                 {

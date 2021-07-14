@@ -1,7 +1,8 @@
 ﻿using Godot;
-using TestCs.Core.Audio;
+using Heimgaerd.Core.Audio;
+using Heimgaerd.StateMachine;
 
-namespace TestCs.StateMachine.States.AttackStates
+namespace Heimgaerd.StateMachine.States.AttackStates
 {
     class GroundAttack : StateBase
     {
@@ -23,7 +24,7 @@ namespace TestCs.StateMachine.States.AttackStates
         {
             if (!actor.ActorAnimation.IsPlaying())
             {
-                actor.CurrentComboID ++;
+                actor.CurrentComboID++;
                 finiteStateMachine.ChangeState<GroundTransition>();
             }
         }

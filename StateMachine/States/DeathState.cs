@@ -1,7 +1,8 @@
 using Godot;
+using Heimgaerd.StateMachine;
 using System;
 
-namespace TestCs.StateMachine.States
+namespace Heimgaerd.StateMachine.States
 {
     public class DeathState : StateBase
     {

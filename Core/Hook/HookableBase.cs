@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestCs.Core.Hook
+namespace Heimgaerd.Core.Hook
 {
     public abstract class HookableBase : Position2D, IComparable<HookableBase>
     {

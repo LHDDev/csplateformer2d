@@ -1,5 +1,8 @@
 ﻿
 using Godot;
+using Heimgaerd.StateMachine;
+using Heimgaerd.StateMachine.States;
+
 namespace TestCs.StateMachine.States.HookStates
 {
     class HookState : StateBase

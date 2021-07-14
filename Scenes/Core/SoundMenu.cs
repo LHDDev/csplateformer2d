@@ -1,5 +1,5 @@
 using Godot;
-using TestCs.Core.Audio;
+using Heimgaerd.Core.Audio;
 
 public class SoundMenu : HBoxContainer
 {
@@ -15,7 +15,7 @@ public class SoundMenu : HBoxContainer
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        GetTree().Paused = true;
+        //GetTree().Paused = true;
         musicVolumeSlider = GetNode<Slider>(musicVolumeSliderPath);
         sfxVolumeSlider = GetNode<Slider>(sfxVolumeSliderPath);
 
@@ -23,5 +23,16 @@ public class SoundMenu : HBoxContainer
 
         musicVolumeSlider.Connect("value_changed", audioController, nameof(AudioController.ChangeMusicVolume));
         sfxVolumeSlider.Connect("value_changed", audioController, nameof(AudioController.ChangeSFXVolume));
+
+        //musicVolumeSlider.GrabFocus();
+    }
+    public void FirstElementGrabFocus()
+    {
+        musicVolumeSlider.GrabFocus();
+    }
+    public void ReleaseMenuElementsFocus()
+    {
+        musicVolumeSlider.ReleaseFocus();
+        sfxVolumeSlider.ReleaseFocus();
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Godot;
+using Heimgaerd.StateMachine;
 using System;
 
-namespace TestCs.StateMachine.States
+namespace Heimgaerd.StateMachine.States
 {
     class AttackState : StateBase
     {
@@ -29,7 +30,7 @@ namespace TestCs.StateMachine.States
 
         private void CheckCombo(string finishedAnimationName)
         {
-            if(comboCurrentId == comboNextId)
+            if (comboCurrentId == comboNextId)
             {
                 finiteStateMachine.ChangeState<IdleState>();
                 return;

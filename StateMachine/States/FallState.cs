@@ -1,8 +1,9 @@
 
 using Godot;
+using Heimgaerd.StateMachine;
 using TestCs.StateMachine.States.HookStates;
 
-namespace TestCs.StateMachine.States
+namespace Heimgaerd.StateMachine.States
 {
     public class FallState : StateBase
     {
@@ -13,8 +14,8 @@ namespace TestCs.StateMachine.States
             {
                 if (!actor.IsOnWall())
                 {
-                    actor.Velocity.x = (actor.FacingDirection == 0 ) ? actor.movementSpeed * initialFacingDirection:actor.movementSpeed*actor.FacingDirection;
-                    
+                    actor.Velocity.x = actor.FacingDirection == 0 ? actor.movementSpeed * initialFacingDirection : actor.movementSpeed * actor.FacingDirection;
+
                 }
                 else if (!actor.IsOnFloor())
                 {
@@ -32,7 +33,7 @@ namespace TestCs.StateMachine.States
         public override void EnterState()
         {
             actor.ActorSprite.Play("fall");
-            initialFacingDirection = (finiteStateMachine.PreviousState is HookState)?((actor.ActorSprite.FlipH)?-1:1):actor.FacingDirection;
+            initialFacingDirection = finiteStateMachine.PreviousState is HookState ? actor.ActorSprite.FlipH ? -1 : 1 : actor.FacingDirection;
         }
     }
 }

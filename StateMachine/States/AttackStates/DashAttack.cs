@@ -1,9 +1,10 @@
 ﻿
 
 using Godot;
-using TestCs.Core.Audio;
+using Heimgaerd.Core.Audio;
+using Heimgaerd.StateMachine;
 
-namespace TestCs.StateMachine.States.AttackStates
+namespace Heimgaerd.StateMachine.States.AttackStates
 {
     class DashAttack : StateBase
     {
@@ -22,7 +23,7 @@ namespace TestCs.StateMachine.States.AttackStates
             actor.Velocity.x = 12000 * actor.FacingDirection;
             if (!actor.ActorAnimation.IsPlaying())
             {
-                actor.CurrentDashComboID ++;
+                actor.CurrentDashComboID++;
                 finiteStateMachine.ChangeState<GroundTransition>();
             }
         }

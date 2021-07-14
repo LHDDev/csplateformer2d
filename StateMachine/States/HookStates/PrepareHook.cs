@@ -1,18 +1,30 @@
-﻿using Godot;
+using Godot;
+using Heimgaerd.StateMachine;
 using System;
 using System.Linq;
 using TestCs.StateMachine.States.HookStates;
 
 using static Extension;
 
-namespace TestCs.StateMachine.States
+namespace Heimgaerd.StateMachine.States
 {
     class PrepareHook : StateBase
     {
+        const int END_VALUE = 1;
+
         [Export]
-        private String hookScenePath;
+        private string hookScenePath;
         [Export]
         private NodePath spawnHookPositionPath;
+        [Export]
+        private float duration;
+        [Export]
+        private float timeScale;
+
+        private float durationMs;
+        private float timeStartMs;
+        private float startSlowValue;
+
 
         private Position2D spawnHookPosition;
 
@@ -21,11 +33,16 @@ namespace TestCs.StateMachine.States
         private bool hookThrowed;
         public override async void Do()
         {
-            if(!hookThrowed)
+            if (!hookThrowed)
             {
-                if (!Input.IsActionPressed("g_hook"))
+                float currentTime = OS.GetTicksMsec() - timeStartMs;
+                double currentSlowValue = CalcEaseValue(currentTime, startSlowValue, END_VALUE, durationMs);
+                Engine.TimeScale = (float)currentSlowValue;
+
+                if (!Input.IsActionPressed("g_hook") || currentTime >= durationMs)
                 {
                     hookableDetection.DisableDetection();
+                    Engine.TimeScale = END_VALUE;
                     finiteStateMachine.ChangeState<IdleState>();
                 }
 
@@ -35,6 +52,7 @@ namespace TestCs.StateMachine.States
                     // Wait for hook signal stating it arrived
                     // change stat to HookState
                     hookThrowed = true;
+                    Engine.TimeScale = END_VALUE;
 
                     Hook hook = SmartLoader<Hook>(hookScenePath);
                     actor.GetParent().AddChild(hook);
@@ -45,13 +63,13 @@ namespace TestCs.StateMachine.States
 
                     await ToSignal(hook, nameof(Hook.HookableCollided));
 
-                    if((actor.GlobalPosition.x > hook.DirectionTo.x && !actor.ActorSprite.FlipH) || (actor.GlobalPosition.x < hook.DirectionTo.x && actor.ActorSprite.FlipH))
+                    if (actor.GlobalPosition.x > hook.DirectionTo.x && !actor.ActorSprite.FlipH || actor.GlobalPosition.x < hook.DirectionTo.x && actor.ActorSprite.FlipH)
                     {
                         actor.ActorSprite.FlipH = !actor.ActorSprite.FlipH;
                     }
 
                     finiteStateMachine.ChangeState<HookState>();
-                
+
                 }
                 if (Input.IsActionJustPressed("ui_left"))
                 {
@@ -86,12 +104,18 @@ namespace TestCs.StateMachine.States
         {
             // Ralentir temporalité
 
-            if(actor is ActorPlayer player)
+            if (actor is ActorPlayer player)
             {
                 hookableDetection = player.HookDetectionArea;
                 hookableDetection.EnableDetection();
                 hookableDetection.accessibleHookSocles.Clear();
                 hookThrowed = false;
+
+                timeStartMs = OS.GetTicksMsec();
+                durationMs = duration * 1000;
+                startSlowValue = 1 - timeScale;
+
+                Engine.TimeScale = startSlowValue;
 
             }
             else
@@ -99,6 +123,12 @@ namespace TestCs.StateMachine.States
                 GD.PrintErr(Errors.CANT_DETECT_HOOK_IF_NON_PLAYER);
                 throw new Exception(Error.CantResolve.ToString());
             }
+        }
+
+        private double CalcEaseValue(float currentTime, float startValue, float endValue, float durationMs)
+        {
+            currentTime /= durationMs;
+            return endValue * Math.Pow(currentTime,4) + startValue ;
         }
     }
 }

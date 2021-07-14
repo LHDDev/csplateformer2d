@@ -1,18 +1,20 @@
 ﻿using Godot;
+using Heimgaerd.StateMachine;
+using Heimgaerd.StateMachine.States;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestCs.StateMachine.States.AttackStates
+namespace Heimgaerd.StateMachine.States.AttackStates
 {
     class GroundTransition : StateBase
     {
         int framesBeforeIdle;
         public override void Do()
         {
-            
-            
-            if(!actor.ActorAnimation.IsPlaying() || actor.CurrentStamina <= 0 )
+
+
+            if (!actor.ActorAnimation.IsPlaying() || actor.CurrentStamina <= 0)
             {
                 finiteStateMachine.ChangeState<IdleState>();
             }
@@ -25,7 +27,7 @@ namespace TestCs.StateMachine.States.AttackStates
 
         public override void _UnhandledInput(InputEvent @event)
         {
-            if(finiteStateMachine.CurrentState is GroundTransition)
+            if (finiteStateMachine.CurrentState is GroundTransition)
             {
 
                 if (Input.IsActionJustPressed("g_jump"))
@@ -40,7 +42,7 @@ namespace TestCs.StateMachine.States.AttackStates
                         finiteStateMachine.ChangeState<GroundAttack>();
                     }
 
-                    if(actor.CurrentDashComboID < actor.MaxDashCombo && Input.GetActionStrength("ui_left") - Input.GetActionStrength("ui_right") != 0 && Input.IsActionJustPressed("g_attack"))
+                    if (actor.CurrentDashComboID < actor.MaxDashCombo && Input.GetActionStrength("ui_left") - Input.GetActionStrength("ui_right") != 0 && Input.IsActionJustPressed("g_attack"))
                     {
                         finiteStateMachine.ChangeState<DashAttack>();
                     }

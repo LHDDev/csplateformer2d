@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace TestCs.StateMachine.States
+namespace Heimgaerd.StateMachine
 {
     public abstract class StateBase : Node
     {
@@ -9,12 +9,12 @@ namespace TestCs.StateMachine.States
         protected StateMachineBase finiteStateMachine;
 
         public abstract void Do();
-        public virtual Boolean CanUpdateDirection()
+        public virtual bool CanUpdateDirection()
         {
             return true;
         }
 
-        public virtual Boolean CanHook()
+        public virtual bool CanHook()
         {
             return true;
         }
@@ -25,7 +25,7 @@ namespace TestCs.StateMachine.States
         }
         public abstract void EnterState();
 
-        public override void _Ready() 
+        public override void _Ready()
         {
             actor = GetOwner<ActorBase>();
             finiteStateMachine = GetParent<StateMachineBase>();

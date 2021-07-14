@@ -1,8 +1,9 @@
 using Godot;
+using Heimgaerd.StateMachine;
+using Heimgaerd.StateMachine.States.AttackStates;
 using System;
-using TestCs.StateMachine.States.AttackStates;
 
-namespace TestCs.StateMachine.States
+namespace Heimgaerd.StateMachine.States
 {
     public class IdleState : StateBase
     {

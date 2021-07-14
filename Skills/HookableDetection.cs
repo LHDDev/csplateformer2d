@@ -1,20 +1,36 @@
 using Godot;
+using Heimgaerd.Core.Hook;
+using System;
 using System.Collections.Generic;
-using System.Linq ;
-using TestCs.Core.Hook;
+using System.Linq;
 
 public class HookableDetection : Area2D
 {
+
     private CollisionShape2D collisionShape2D;
     public List<HookableBase> accessibleHookSocles;
     private int selectedHookableIndex;
 
+    private Godot.Collections.Array exceptions;
+    private Physics2DDirectSpaceState spaceState;
+
+
+    private List<Vector2> targetPosition;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         collisionShape2D = this.FindChildrenOfType<CollisionShape2D>().ElementAt(0);
-
         accessibleHookSocles = new List<HookableBase>();
+        spaceState = GetWorld2d().DirectSpaceState;
+        exceptions = new Godot.Collections.Array();
+        exceptions.Add(this);
+        exceptions.Add(GetParent());
+        targetPosition = new List<Vector2>();
+    }
+
+    public override void _Process(float delta)
+    {
+        Update();
     }
 
     /// <summary>
@@ -29,20 +45,26 @@ public class HookableDetection : Area2D
 
     public void DisableDetection()
     {
-        accessibleHookSocles.ElementAt<HookableBase>(selectedHookableIndex).SetSelected(false);
+        if(accessibleHookSocles.Count > 0)
+        {
+            accessibleHookSocles.ElementAt<HookableBase>(selectedHookableIndex).SetSelected(false);
+        }
         collisionShape2D.Disabled = true;
+        targetPosition.Clear();
+
     }
     public void TryAddingHookable(HookableBase hookable)
     {
-        // Is hookable accessible ?
-        // YES => add to list
-        // NO => do nothing
+        Godot.Collections.Dictionary result = spaceState.IntersectRay(this.GlobalPosition, hookable.GlobalPosition,exceptions,CollisionMask,true,true);
 
-        accessibleHookSocles.Add(hookable);
-        accessibleHookSocles.Sort();
-
-        RefreshShaders();
-
+        targetPosition.Add((Vector2)result["position"]);
+        if(((Node2D)result["collider"] ).GetParent() is HookableBase) // Horrible, a refaire avec les collisions names
+        {
+            accessibleHookSocles.Add(hookable);
+            accessibleHookSocles.Sort();
+            RefreshShaders();
+        }
+        
     }
 
     public Vector2 GetSelectedHookableGlobalPosition()
@@ -54,31 +76,45 @@ public class HookableDetection : Area2D
 
     public void SelectNextHookable()
     {
-        if (selectedHookableIndex >= accessibleHookSocles.Count - 1)
+        if(accessibleHookSocles.Count > 0)
         {
-            selectedHookableIndex = 0;
+            if (selectedHookableIndex >= accessibleHookSocles.Count - 1)
+            {
+                selectedHookableIndex = 0;
+            }
+            else
+                selectedHookableIndex ++;
+            RefreshShaders();
         }
-        else
-            selectedHookableIndex ++;
-        RefreshShaders();
     }
 
     public void SelectPreviousHookable()
     {
-        if (selectedHookableIndex <= 0)
+        if(accessibleHookSocles.Count > 0)
         {
-            selectedHookableIndex = accessibleHookSocles.Count - 1;
-        }
-        else
-            selectedHookableIndex --;
+            if (selectedHookableIndex <= 0)
+            {
+                selectedHookableIndex = accessibleHookSocles.Count - 1;
+            }
+            else
+                selectedHookableIndex --;
 
-        RefreshShaders();
+            RefreshShaders();
+        }
+    }
+
+    public override void _Draw()
+    {
+        foreach(Vector2 tposition in targetPosition)
+        {
+            DrawLine(this.Position, tposition- this.GlobalPosition, new Color(1, 0, 0), 1);
+            DrawCircle(tposition - this.GlobalPosition, 2, new Color(1, 0, 0));
+        }
     }
 
     private void RefreshShaders()
     {
         accessibleHookSocles.ForEach(h => h.SetSelected(false));
         accessibleHookSocles.ElementAt<HookableBase>(selectedHookableIndex).SetSelected(true);
-
     }
 }

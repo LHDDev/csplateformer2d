@@ -163,6 +163,7 @@ motion_scale = Vector2( 0.1, 1 )
 motion_mirroring = Vector2( 640, 0 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 0.749146, -0.749146 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 centered = false
@@ -294,7 +295,7 @@ percent_visible = false
 script = ExtResource( 6 )
 
 [node name="HookSocle" parent="." instance=ExtResource( 7 )]
-position = Vector2( 404.858, 164.414 )
+position = Vector2( 404.861, 312.438 )
 
 [node name="HookSocle2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 328.154, 185.82 )
+position = Vector2( 288.187, 199.732 )

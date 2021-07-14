@@ -1,8 +1,9 @@
 using Godot;
+using Heimgaerd.StateMachine;
+using Heimgaerd.StateMachine.States.AttackStates;
 using System;
-using TestCs.StateMachine.States.AttackStates;
 
-namespace TestCs.StateMachine.States
+namespace Heimgaerd.StateMachine.States
 {
     public class RunState : StateBase
     {
@@ -27,7 +28,7 @@ namespace TestCs.StateMachine.States
                 finiteStateMachine.ChangeState<FallState>();
             }
 
-            if(Input.GetActionStrength("ui_left") - Input.GetActionStrength("ui_right") != 0 && Input.IsActionJustPressed("g_attack") && actor.CurrentStamina > 0)
+            if (Input.GetActionStrength("ui_left") - Input.GetActionStrength("ui_right") != 0 && Input.IsActionJustPressed("g_attack") && actor.CurrentStamina > 0)
             {
                 finiteStateMachine.ChangeState<DashAttack>();
             }
