@@ -1,7 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Actors/ActorEnnemyBase.cs" type="Script" id=2]
+[ext_resource path="res://StateMachine/States/NPCStates/MoveState.cs" type="Script" id=3]
+[ext_resource path="res://StateMachine/States/NPCStates/NpcIdleState.cs" type="Script" id=4]
+[ext_resource path="res://StateMachine/StateMachineBase.cs" type="Script" id=5]
+[ext_resource path="res://Behaviours/PatrolBehaviour.cs" type="Script" id=6]
+[ext_resource path="res://Behaviours/BehaviourMachine.cs" type="Script" id=7]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -16,6 +21,7 @@ extents = Vector2( 16, 16 )
 
 [node name="EnemyBase" type="KinematicBody2D"]
 script = ExtResource( 2 )
+behaviourMachinePath = NodePath("BehaviourTree")
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
@@ -25,5 +31,25 @@ frames = SubResource( 1 )
 shape = SubResource( 2 )
 
 [node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource( 4 )
+
+[node name="MoveState" type="Node" parent="StateMachine"]
+script = ExtResource( 3 )
 
 [node name="BehaviourTree" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="PatrolBehaviour" type="Node" parent="BehaviourTree"]
+script = ExtResource( 6 )
+waitingTimerPath = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="BehaviourTree/PatrolBehaviour"]
+wait_time = 2.0
+one_shot = true
+
+[node name="ChaseBehaviour" type="Node" parent="BehaviourTree"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

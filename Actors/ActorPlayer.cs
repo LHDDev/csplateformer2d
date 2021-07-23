@@ -1,4 +1,5 @@
 using Godot;
+using Heimgaerd.StateMachine;
 using Heimgaerd.StateMachine.States;
 using System;
 using System.Linq;
@@ -16,10 +17,24 @@ public class ActorPlayer : ActorBase
     public HookableDetection HookDetectionArea { get; private set; }
 
 
+
+    protected override void Init()
+    {
+        base.Init();
+        finiteStateMachine = this.FindChildrenOfType<StateMachineBase>().FirstOrDefault();
+        if (finiteStateMachine != default)
+        {
+            finiteStateMachine.ChangeState<IdleState>();
+        }
+        else
+        {
+            GD.Print("ERREUR LORS DE LA RECUPERATION DE LA STATE MACHINE");
+        }
+    }
     // Called when the node enters the scene tree for the first time.
     public async override void _Ready()
     {
-        base.Init();
+        Init();
         FacingDirection = 0;
 
         HookDetectionArea = this.FindChildrenOfType<HookableDetection>().ElementAt(0);

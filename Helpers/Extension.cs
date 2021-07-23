@@ -67,4 +67,12 @@ public static class Extension
         return array;
     }
 
+    public static T PopIndex<T>(this List<T> list, int index) where T : Node
+    {
+        T element = list[index];
+        list.RemoveAt(index);
+
+        return element;
+    }
+
 }

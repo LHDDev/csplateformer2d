@@ -3,6 +3,7 @@ using Godot.Collections;
 using Heimgaerd.Core.Audio;
 using Heimgaerd.StateMachine;
 using Heimgaerd.StateMachine.States;
+using Heimgaerd.StateMachine.States.NPCStates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ public abstract class ActorBase : KinematicBody2D
 
     public int CurrentComboID { get; set; }
     public int CurrentDashComboID { get; set; }
-    protected void Init()
+    protected virtual void Init()
     {
 
         List<string> errorList = VerifyActor();
@@ -65,12 +66,6 @@ public abstract class ActorBase : KinematicBody2D
 
         isSnapped = true;
         snappedVector = new Vector2(0.0f, 20.0f);
-
-        finiteStateMachine = this.FindChildrenOfType<StateMachineBase>().FirstOrDefault();
-        if( finiteStateMachine != default)
-        {
-            finiteStateMachine.ChangeState<IdleState>();
-        }
 
         AudioController = GetNode<AudioController>("/root/AudioController");
 
@@ -91,13 +86,12 @@ public abstract class ActorBase : KinematicBody2D
     {
         if (finiteStateMachine.CurrentState.CanMove())
         {
-            ApplyMovement(delta);
+            ApplyMovement();
         }
     }
 
-    private void ApplyMovement(float delta)
+    private void ApplyMovement()
     {
-        Velocity.x *= delta;
         Velocity.y += finiteStateMachine.CurrentState is WallState? gravityForce/10: gravityForce;
 
         MoveAndSlideWithSnap(Velocity,isSnapped?snappedVector:Vector2.Zero, Vector2.Up);
