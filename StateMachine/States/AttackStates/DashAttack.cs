@@ -20,7 +20,7 @@ namespace Heimgaerd.StateMachine.States.AttackStates
         }
         public override void Do()
         {
-            actor.Velocity.x = 12000 * actor.FacingDirection;
+            actor.Velocity.x = 150 * actor.FacingDirection;
             if (!actor.ActorAnimation.IsPlaying())
             {
                 actor.CurrentDashComboID++;
