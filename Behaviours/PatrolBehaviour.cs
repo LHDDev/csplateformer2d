@@ -22,7 +22,7 @@ namespace Heimgaerd.Behaviours
             // LookTo currentTarget
             if(actor.GlobalPosition.x >= currentTarget.x - 10 && actor.GlobalPosition.x <= currentTarget.x + 10)
             {
-                actor.updateFacingDirection(0);
+                actor.UpdateFacingDirection(0);
                 previousTargets.Insert(0,currentTarget);
 
 
@@ -51,7 +51,7 @@ namespace Heimgaerd.Behaviours
             {
                 nextTargets.Add(t);
             }
-            nextTargets = actor.PatrolPoints;
+            //nextTargets = actor.PatrolPoints;
 
             currentTarget = nextTargets[0];
             nextTargets.RemoveAt(0);
@@ -68,7 +68,7 @@ namespace Heimgaerd.Behaviours
 
         public void UpdateFacingTarget()
         {
-            actor.updateFacingDirection(Math.Sign(currentTarget.x - actor.GlobalPosition.x));
+            actor.UpdateFacingDirection(Math.Sign(currentTarget.x - actor.GlobalPosition.x));
         }
     }
 }

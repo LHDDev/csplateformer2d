@@ -9,11 +9,12 @@ namespace Heimgaerd.Behaviours
     public abstract class BehaviourBase : Node
     {
         protected ActorEnnemyBase actor;
-        //protected BehaviourMachine behaviourMachine;
+        protected BehaviourMachine behaviourMachine;
 
         public override void _Ready()
         {
             actor = GetOwner<ActorEnnemyBase>();
+            behaviourMachine = GetParent<BehaviourMachine>();
         }
 
         public abstract void EnterBehaviour();

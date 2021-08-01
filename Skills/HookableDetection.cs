@@ -14,7 +14,7 @@ public class HookableDetection : Area2D
     private Godot.Collections.Array exceptions;
     private Physics2DDirectSpaceState spaceState;
 
-
+    // Debug
     private List<Vector2> targetPosition;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -64,7 +64,7 @@ public class HookableDetection : Area2D
             accessibleHookSocles.Sort();
             RefreshShaders();
         }
-        
+
     }
 
     public Vector2 GetSelectedHookableGlobalPosition()

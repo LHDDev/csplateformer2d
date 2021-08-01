@@ -14,8 +14,13 @@ public class ActorEnnemyBase : ActorBase
     
     [Export]
     private NodePath behaviourMachinePath;
+    [Export]
+    private NodePath fieldOfViewPath;
 
     private BehaviourMachine behaviourMachine;
+    public Area2D fieldOfView { get; private set; }
+
+    public ActorPlayer currentTarget;
     protected override void Init()
     {
         base.Init();
@@ -29,8 +34,13 @@ public class ActorEnnemyBase : ActorBase
             GD.Print("ERREUR LORS DE LA RECUPERATION DE LA STATE MACHINE");
         }
 
+        fieldOfView = GetNode<Area2D>(fieldOfViewPath);
+        fieldOfView.Connect("body_entered", this, nameof(BeginChase));
+        fieldOfView.Connect("body_exited", this, nameof(EndChase));
+
         behaviourMachine = GetNode<BehaviourMachine>(behaviourMachinePath);
         behaviourMachine.ChangeBehaviour<PatrolBehaviour>();
+
     }
     public override void UpdateHP(int amount)
     {
@@ -42,8 +52,27 @@ public class ActorEnnemyBase : ActorBase
         CurrentHealt -= amount;
     }
 
-    public void updateFacingDirection(int newFacingDirection)
+    public void UpdateFacingDirection(int newFacingDirection)
     {
         FacingDirection = newFacingDirection;
+        if (FacingDirection >= 1) fieldOfView.Scale = Vector2.One;
+        else if (FacingDirection <= -1) fieldOfView.Scale = Vector2.NegOne;
+    }
+
+    public void BeginChase(Node body)
+    {
+        if (body is ActorPlayer player)
+        {
+            currentTarget = player;
+            behaviourMachine.ChangeBehaviour<ChaseBehaviour>();
+        }
+    }
+    public void EndChase(Node body)
+    {
+        if (body is ActorPlayer player)
+        {
+            currentTarget = null;
+            behaviourMachine.ChangeBehaviour<PatrolBehaviour>();
+        }
     }
 }

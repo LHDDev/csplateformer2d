@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Heimgaerd.Behaviours
 {
-    class BehaviourMachine : Node
+    public class BehaviourMachine : Node
     {
         private BehaviourBase currentBehaviour;
 
