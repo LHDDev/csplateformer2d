@@ -10,7 +10,7 @@
 
 [node name="Node2D" parent="CurrentActScene" instance=ExtResource( 1 )]
 pause_mode = 1
-position = Vector2( -1.5874, -1.19055 )
+position = Vector2( -4.11011, -2.03145 )
 
 [node name="OrchestraPit" type="Node" parent="."]
 

@@ -8,16 +8,10 @@ namespace Heimgaerd.StateMachine.States
     {
         public override void Do()
         {
-            if (!actor.IsInGroup("player"))
+            if (((ActorPlayer)actor).CanRespanw)
             {
-
-                actor.QueueFree();
+                actor.Death();
             }
-            else
-            {
-                // Launch Game Over Scene
-            }
-
         }
 
         public override bool CanUpdateDirection()
@@ -31,7 +25,8 @@ namespace Heimgaerd.StateMachine.States
 
         public override void EnterState()
         {
-            actor.ActorSprite.Play("death");
+            actor.ActorAnimation.Play("death");
+            actor.Velocity.x = 0;
         }
     }
 }

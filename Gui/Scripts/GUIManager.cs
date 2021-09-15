@@ -1,4 +1,5 @@
 using Godot;
+using Heimgaerd.Gui.HUD;
 using System;
 using static Extension;
 
@@ -12,23 +13,23 @@ namespace Heimgaerd.Gui.Scripts
         private NodePath SPBarNodePath;
 
 
-        private ProgressBar HPBar;
-        private ProgressBar SpBar;
+        private HpGauger HPBar;
+        private StaminaGauge SpBar;
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            HPBar = GetNode<ProgressBar>(HPBarNodePath);
-            SpBar = GetNode<ProgressBar>(SPBarNodePath);
+            HPBar = GetNode<HpGauger>(HPBarNodePath);
+            SpBar = GetNode<StaminaGauge>(SPBarNodePath);
         }
 
-        public void UpdateHp(float newCurrentHP)
+        public void UpdateHp(int newCurrentHP)
         {
-            HPBar.Value = newCurrentHP;
+            HPBar.DisplayPV(newCurrentHP);
         }
         public void UpdateSp(float newCurrentSP)
         {
-            SpBar.Value = newCurrentSP;
+            SpBar.UpdateStamina(newCurrentSP);
         }
 
 

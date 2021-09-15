@@ -147,11 +147,15 @@ public abstract class ActorBase : KinematicBody2D
 
     public virtual void UpdateHP(int amount)
     {
-        CurrentStamina = Math.Max(0, CurrentStamina - amount);
+        CurrentHealt = Math.Max(0, CurrentHealt + amount);
     }
     public virtual void UpdateSP(int amount)
     {
         CurrentStamina = Math.Max(0, CurrentStamina - amount);
     }
 
+    public virtual void Death()
+    {
+        QueueFree();
+    }
 }
